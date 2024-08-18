@@ -26,8 +26,8 @@ def get_image(image,face,face_box,upper_boundary_ratio = 0.5,expand=1.2):
     #print(image.shape)
     #print(face.shape)
     
-    body = Image.fromarray(image[:,:,::-1])
-    face = Image.fromarray(face[:,:,::-1])
+    body = Image.fromarray(image)
+    face = Image.fromarray(face)
 
     x, y, x1, y1 = face_box 
     #print(x1-x,y1-y)
@@ -56,10 +56,10 @@ def get_image(image,face,face_box,upper_boundary_ratio = 0.5,expand=1.2):
     face_large.paste(face, (x-x_s, y-y_s, x1-x_s, y1-y_s))
     body.paste(face_large, crop_box[:2], mask_image)
     body = np.array(body)
-    return body[:,:,::-1]
+    return body
 
 def get_image_prepare_material(image,face_box,upper_boundary_ratio = 0.5,expand=1.2):
-    body = Image.fromarray(image[:,:,::-1])
+    body = Image.fromarray(image)
 
     x, y, x1, y1 = face_box
     #print(x1-x,y1-y)
@@ -85,8 +85,8 @@ def get_image_prepare_material(image,face_box,upper_boundary_ratio = 0.5,expand=
     return mask_array,crop_box
 
 def get_image_blending(image,face,face_box,mask_array,crop_box):
-    body = Image.fromarray(image[:,:,::-1])
-    face = Image.fromarray(face[:,:,::-1])
+    body = Image.fromarray(image)
+    face = Image.fromarray(face)
 
     x, y, x1, y1 = face_box
     x_s, y_s, x_e, y_e = crop_box
@@ -97,4 +97,4 @@ def get_image_blending(image,face,face_box,mask_array,crop_box):
     face_large.paste(face, (x-x_s, y-y_s, x1-x_s, y1-y_s))
     body.paste(face_large, crop_box[:2], mask_image)
     body = np.array(body)
-    return body[:,:,::-1]
+    return body

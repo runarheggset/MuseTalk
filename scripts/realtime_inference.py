@@ -74,26 +74,12 @@ class Avatar:
     def init(self):
         if self.preparation:
             if os.path.exists(self.avatar_path):
-                response = input(f"{self.avatar_id} exists, Do you want to re-create it ? (y/n)")
-                if response.lower() == "y":
-                    shutil.rmtree(self.avatar_path)
-                    print("*********************************")
-                    print(f"  creating avator: {self.avatar_id}")
-                    print("*********************************")
-                    osmakedirs([self.avatar_path,self.full_imgs_path,self.video_out_path,self.mask_out_path])
-                    self.prepare_material()
-                else:
-                    self.input_latent_list_cycle = torch.load(self.latents_out_path)
-                    with open(self.coords_path, 'rb') as f:
-                        self.coord_list_cycle = pickle.load(f)
-                    input_img_list = glob.glob(os.path.join(self.full_imgs_path, '*.[jpJP][pnPN]*[gG]'))
-                    input_img_list = sorted(input_img_list, key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))
-                    self.frame_list_cycle = read_imgs(input_img_list)
-                    with open(self.mask_coords_path, 'rb') as f:
-                        self.mask_coords_list_cycle = pickle.load(f)
-                    input_mask_list = glob.glob(os.path.join(self.mask_out_path, '*.[jpJP][pnPN]*[gG]'))
-                    input_mask_list = sorted(input_mask_list, key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))
-                    self.mask_list_cycle = read_imgs(input_mask_list)
+                shutil.rmtree(self.avatar_path)
+                print("*********************************")
+                print(f"  creating avator: {self.avatar_id}")
+                print("*********************************")
+                osmakedirs([self.avatar_path,self.full_imgs_path,self.video_out_path,self.mask_out_path])
+                self.prepare_material()
             else:
                 print("*********************************")
                 print(f"  creating avator: {self.avatar_id}")
@@ -217,7 +203,7 @@ class Avatar:
 
             if skip_save_images is False:
                 # cv2.imwrite(f"{self.avatar_path}/tmp/{str(self.idx).zfill(8)}.png",combine_frame)
-                wfile.write(cv2.imencode('.png', combine_frame)[1].tobytes())
+                wfile.write(cv2.imencode('.jpg', combine_frame, [cv2.IMWRITE_JPEG_QUALITY, 100])[1].tobytes())
             self.idx = self.idx + 1
 
     def inference(self, 

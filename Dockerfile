@@ -36,6 +36,6 @@ ENV PATH="/app/venv/bin:$PATH"
 
 RUN pip install -r requirements.txt
 RUN pip install openmim
-RUN mim install mmengine "mmcv>=2.0.1,<2.2.0" "mmdet>=3.1.0" "mmpose>=1.1.0"
+RUN mim install mmengine "mmcv==2.1.0" "mmdet>=3.1.0" "mmpose>=1.1.0"
 
 CMD ["python", "server.py"]

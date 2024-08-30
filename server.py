@@ -2,6 +2,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from omegaconf import OmegaConf
 from urllib.parse import urlparse, parse_qsl
 import numpy as np
+import uuid
+import os
 
 from scripts.realtime_inference import Avatar;
 
@@ -41,12 +43,17 @@ class MuseTalkServer(BaseHTTPRequestHandler):
         length = int(self.headers.get("content-length"))
         audio_data = self.rfile.read(length)
 
-        buf = np.frombuffer(audio_data, np.int16).flatten().astype(np.float32) / 32768.0
+        random = str(uuid.uuid4())
+
+        with open("data/audio/"+random+".wav", "wb") as f:
+            f.write(audio_data)
 
         self.send_response(200)
         self.end_headers()
 
-        avatar.inference(buf, None, fps, skip_save_images, self.wfile)
+        avatar.inference("data/audio/"+random+".wav", None, fps, skip_save_images, self.wfile)
+
+        os.remove("data/audio/"+random+".wav")
 
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), MuseTalkServer)

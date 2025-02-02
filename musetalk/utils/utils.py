@@ -13,15 +13,16 @@ elif ffmpeg_path not in os.getenv('PATH'):
     
 from musetalk.whisper.audio2feature import Audio2Feature
 from musetalk.models.vae import VAE
-from musetalk.models.unet import UNet,PositionalEncoding
+from musetalk.models.unet import UNet
 
-def load_all_model():
+def load_all_model(use_float16=False):
     audio_processor = Audio2Feature(model_path="./models/whisper/tiny.pt")
-    vae = VAE(model_path = "./models/sd-vae-ft-mse/")
+    vae = VAE(model_path = "./models/sd-vae-ft-mse/",
+              use_float16=use_float16)
     unet = UNet(unet_config="./models/musetalk/musetalk.json",
-                model_path ="./models/musetalk/pytorch_model.bin")
-    pe = PositionalEncoding(d_model=384)
-    return audio_processor,vae,unet,pe
+                model_path ="./models/musetalk/pytorch_model.bin",
+                use_float16=use_float16)
+    return audio_processor, vae, unet, unet.pe
 
 def get_file_type(video_path):
     _, ext = os.path.splitext(video_path)

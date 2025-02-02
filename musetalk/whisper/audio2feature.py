@@ -11,7 +11,7 @@ class Audio2Feature():
                  whisper_model_type="tiny",
                  model_path="./models/whisper/tiny.pt"):
         self.whisper_model_type = whisper_model_type
-        self.model = load_model(model_path) #
+        self.model = load_model(model_path)
 
     def get_sliced_feature(self,
                            feature_array, 

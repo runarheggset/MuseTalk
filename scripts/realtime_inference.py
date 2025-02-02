@@ -22,12 +22,9 @@ import queue
 import time
 
 # load model weights
-audio_processor, vae, unet, pe = load_all_model()
+audio_processor, vae, unet, pe = load_all_model(use_float16=True)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 timesteps = torch.tensor([0], device=device)
-pe = pe.half()
-vae.vae = vae.vae.half()
-unet.model = unet.model.half()
 
 def video2imgs(vid_path, save_path, ext = '.png',cut_frame = 10000000):
     cap = cv2.VideoCapture(vid_path)

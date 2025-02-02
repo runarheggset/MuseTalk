@@ -1,14 +1,14 @@
 --extra-index-url https://download.pytorch.org/whl/cu121
-torch==2.3.1
-torchvision>=0.15.2
-torchaudio>=2.0.2
-diffusers==0.30.0
+torch==2.5.1
+torchvision>=0.20.1
+torchaudio>=2.5.1
+diffusers==0.32.2
 accelerate==0.33.0
-tensorflow==2.17.0
-tensorboard==2.17.0
-opencv-python==4.10.0.84
-soundfile==0.12.1
-transformers==4.44.0
+tensorflow==2.18.0
+tensorboard==2.18.0
+opencv-python==4.11.0.86
+soundfile==0.13.1
+transformers==4.48.2
 
 gdown
 requests
